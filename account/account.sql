@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS account.account
+(
+    created TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    edited TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    email VARCHAR(255) NOT NULL,
+    id SERIAL NOT NULL,
+    name VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (email),
+    UNIQUE (name)
+);
+
+ALTER TABLE account.account
+    OWNER TO postgres;
