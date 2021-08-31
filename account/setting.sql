@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS account.settings
+CREATE TABLE IF NOT EXISTS account.setting
 (
     account SERIAL NOT NULL,
     biography VARCHAR(160),
@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS account.settings
         REFERENCES language.language (id) MATCH SIMPLE
 );
 
-ALTER TABLE account.settings
+ALTER TABLE account.setting
     OWNER TO postgres;
