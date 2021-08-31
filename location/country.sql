@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS location.country
     UNIQUE (alpha_3),
     UNIQUE (name),
     UNIQUE (numeric),
-    CHECK (CHAR_LENGTH(alpha_2) <= 2),
-    CHECK (CHAR_LENGTH(alpha_3) <= 3),
+    CHECK (CHAR_LENGTH(alpha_2) = 2),
+    CHECK (CHAR_LENGTH(alpha_3) = 3),
     CHECK (CHAR_LENGTH(name) <= 60)
 );
 

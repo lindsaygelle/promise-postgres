@@ -26,6 +26,15 @@ CREATE SCHEMA account;
 ALTER SCHEMA account OWNER TO postgres;
 
 --
+-- Name: language; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA language;
+
+
+ALTER SCHEMA language OWNER TO postgres;
+
+--
 -- Name: location; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
@@ -97,7 +106,8 @@ CREATE TABLE account.settings (
     account integer NOT NULL,
     biography character varying(160),
     country integer NOT NULL,
-    edited timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+    edited timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    language integer NOT NULL
 );
 
 
@@ -145,6 +155,124 @@ ALTER TABLE account.settings_country_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE account.settings_country_seq OWNED BY account.settings.country;
+
+
+--
+-- Name: settings_language_seq; Type: SEQUENCE; Schema: account; Owner: postgres
+--
+
+CREATE SEQUENCE account.settings_language_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE account.settings_language_seq OWNER TO postgres;
+
+--
+-- Name: settings_language_seq; Type: SEQUENCE OWNED BY; Schema: account; Owner: postgres
+--
+
+ALTER SEQUENCE account.settings_language_seq OWNED BY account.settings.language;
+
+
+--
+-- Name: language; Type: TABLE; Schema: language; Owner: postgres
+--
+
+CREATE TABLE language.language (
+    created timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    id integer NOT NULL,
+    name public.citext NOT NULL
+);
+
+
+ALTER TABLE language.language OWNER TO postgres;
+
+--
+-- Name: language_id_seq; Type: SEQUENCE; Schema: language; Owner: postgres
+--
+
+CREATE SEQUENCE language.language_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE language.language_id_seq OWNER TO postgres;
+
+--
+-- Name: language_id_seq; Type: SEQUENCE OWNED BY; Schema: language; Owner: postgres
+--
+
+ALTER SEQUENCE language.language_id_seq OWNED BY language.language.id;
+
+
+--
+-- Name: tag; Type: TABLE; Schema: language; Owner: postgres
+--
+
+CREATE TABLE language.tag (
+    created timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    id integer NOT NULL,
+    language integer NOT NULL,
+    name public.citext NOT NULL,
+    tag public.citext NOT NULL,
+    CONSTRAINT tag_name_check CHECK ((char_length((name)::text) <= 20)),
+    CONSTRAINT tag_tag_check CHECK ((char_length((tag)::text) = 5))
+);
+
+
+ALTER TABLE language.tag OWNER TO postgres;
+
+--
+-- Name: tag_id_seq; Type: SEQUENCE; Schema: language; Owner: postgres
+--
+
+CREATE SEQUENCE language.tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE language.tag_id_seq OWNER TO postgres;
+
+--
+-- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: language; Owner: postgres
+--
+
+ALTER SEQUENCE language.tag_id_seq OWNED BY language.tag.id;
+
+
+--
+-- Name: tag_language_seq; Type: SEQUENCE; Schema: language; Owner: postgres
+--
+
+CREATE SEQUENCE language.tag_language_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE language.tag_language_seq OWNER TO postgres;
+
+--
+-- Name: tag_language_seq; Type: SEQUENCE OWNED BY; Schema: language; Owner: postgres
+--
+
+ALTER SEQUENCE language.tag_language_seq OWNED BY language.tag.language;
 
 
 --
@@ -210,6 +338,34 @@ ALTER TABLE ONLY account.settings ALTER COLUMN country SET DEFAULT nextval('acco
 
 
 --
+-- Name: settings language; Type: DEFAULT; Schema: account; Owner: postgres
+--
+
+ALTER TABLE ONLY account.settings ALTER COLUMN language SET DEFAULT nextval('account.settings_language_seq'::regclass);
+
+
+--
+-- Name: language id; Type: DEFAULT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.language ALTER COLUMN id SET DEFAULT nextval('language.language_id_seq'::regclass);
+
+
+--
+-- Name: tag id; Type: DEFAULT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.tag ALTER COLUMN id SET DEFAULT nextval('language.tag_id_seq'::regclass);
+
+
+--
+-- Name: tag language; Type: DEFAULT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.tag ALTER COLUMN language SET DEFAULT nextval('language.tag_language_seq'::regclass);
+
+
+--
 -- Name: country id; Type: DEFAULT; Schema: location; Owner: postgres
 --
 
@@ -229,8 +385,26 @@ COPY account.account (created, edited, email, id, name) FROM stdin;
 -- Data for Name: settings; Type: TABLE DATA; Schema: account; Owner: postgres
 --
 
-COPY account.settings (account, biography, country, edited) FROM stdin;
-1	\N	1	2021-08-31 01:58:34.315218+00
+COPY account.settings (account, biography, country, edited, language) FROM stdin;
+1	hello	1	2021-08-31 06:01:05.480619+00	1
+\.
+
+
+--
+-- Data for Name: language; Type: TABLE DATA; Schema: language; Owner: postgres
+--
+
+COPY language.language (created, id, name) FROM stdin;
+2021-08-31 05:56:44.310035+00	1	english
+\.
+
+
+--
+-- Data for Name: tag; Type: TABLE DATA; Schema: language; Owner: postgres
+--
+
+COPY language.tag (created, id, language, name, tag) FROM stdin;
+2021-08-31 05:56:44.310035+00	1	1	United States	en-US
 \.
 
 
@@ -265,6 +439,34 @@ SELECT pg_catalog.setval('account.settings_country_seq', 1, false);
 
 
 --
+-- Name: settings_language_seq; Type: SEQUENCE SET; Schema: account; Owner: postgres
+--
+
+SELECT pg_catalog.setval('account.settings_language_seq', 1, false);
+
+
+--
+-- Name: language_id_seq; Type: SEQUENCE SET; Schema: language; Owner: postgres
+--
+
+SELECT pg_catalog.setval('language.language_id_seq', 1, true);
+
+
+--
+-- Name: tag_id_seq; Type: SEQUENCE SET; Schema: language; Owner: postgres
+--
+
+SELECT pg_catalog.setval('language.tag_id_seq', 1, true);
+
+
+--
+-- Name: tag_language_seq; Type: SEQUENCE SET; Schema: language; Owner: postgres
+--
+
+SELECT pg_catalog.setval('language.tag_language_seq', 1, false);
+
+
+--
 -- Name: country_id_seq; Type: SEQUENCE SET; Schema: location; Owner: postgres
 --
 
@@ -293,6 +495,46 @@ ALTER TABLE ONLY account.account
 
 ALTER TABLE ONLY account.account
     ADD CONSTRAINT account_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: language language_name_key; Type: CONSTRAINT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.language
+    ADD CONSTRAINT language_name_key UNIQUE (name);
+
+
+--
+-- Name: language language_pkey; Type: CONSTRAINT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.language
+    ADD CONSTRAINT language_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tag tag_name_key; Type: CONSTRAINT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.tag
+    ADD CONSTRAINT tag_name_key UNIQUE (name);
+
+
+--
+-- Name: tag tag_pkey; Type: CONSTRAINT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.tag
+    ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tag tag_tag_key; Type: CONSTRAINT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.tag
+    ADD CONSTRAINT tag_tag_key UNIQUE (tag);
 
 
 --
@@ -349,6 +591,22 @@ ALTER TABLE ONLY account.settings
 
 ALTER TABLE ONLY account.settings
     ADD CONSTRAINT settings_country_fkey FOREIGN KEY (country) REFERENCES location.country(id);
+
+
+--
+-- Name: settings settings_language_fkey; Type: FK CONSTRAINT; Schema: account; Owner: postgres
+--
+
+ALTER TABLE ONLY account.settings
+    ADD CONSTRAINT settings_language_fkey FOREIGN KEY (language) REFERENCES language.language(id);
+
+
+--
+-- Name: tag tag_language_fkey; Type: FK CONSTRAINT; Schema: language; Owner: postgres
+--
+
+ALTER TABLE ONLY language.tag
+    ADD CONSTRAINT tag_language_fkey FOREIGN KEY (language) REFERENCES language.language(id) ON DELETE CASCADE;
 
 
 --
