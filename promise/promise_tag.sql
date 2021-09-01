@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS promise_tag
+CREATE TABLE IF NOT EXISTS promise.promise_tag
 (
     id SERIAL NOT NULL,
     promise SERIAL NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS promise_tag
     FOREIGN KEY (tag)
         REFERENCES promise.tag (id)
         ON DELETE CASCADE
-)
+);
 
 ALTER TABLE promise_tag
     OWNER TO postgres;
