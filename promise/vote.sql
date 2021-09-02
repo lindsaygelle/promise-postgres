@@ -2,10 +2,9 @@ CREATE TABLE IF NOT EXISTS promise.vote
 (
     account SERIAL NOT NULL,
     created TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    id SERIAL NOT NULL,
     promise SERIAL NOT NULL,
     value BOOLEAN NOT NULL,
-    PRIMARY KEY(id),
+    PRIMARY KEY(account, promise),
     FOREIGN KEY (account)
         REFERENCES account.account MATCH SIMPLE
         ON DELETE CASCADE,
