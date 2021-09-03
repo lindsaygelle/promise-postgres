@@ -1,9 +1,8 @@
 CREATE TABLE IF NOT EXISTS promise.promise_tag
 (
-    id SERIAL NOT NULL,
     promise SERIAL NOT NULL,
     tag SERIAL NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (promise, tag),
     FOREIGN KEY (promise)
         REFERENCES promise.promise (id),
     FOREIGN KEY (tag)
@@ -11,5 +10,5 @@ CREATE TABLE IF NOT EXISTS promise.promise_tag
         ON DELETE CASCADE
 );
 
-ALTER TABLE promise_tag
+ALTER TABLE promise.promise_tag
     OWNER TO postgres;
