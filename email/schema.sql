@@ -1,0 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS email;
+
+ALTER SCHEMA email
+    OWNER TO postgres;
