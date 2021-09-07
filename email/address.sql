@@ -9,8 +9,8 @@ email.address (
 	FOREIGN KEY (domain)
         REFERENCES email.domain (id)
         MATCH SIMPLE,
-	UNIQUE (address)
-    CHECK (CHAR_LENGTH(address) <= 100)
+	UNIQUE (address, domain),
+    CHECK (CHAR_LENGTH(address) > 0 AND CHAR_LENGTH(address) <= 100)
 );
 
 ALTER TABLE email.address
