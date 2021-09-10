@@ -8,7 +8,10 @@ email.address (
 	PRIMARY KEY(id),
 	FOREIGN KEY (domain)
         REFERENCES email.domain (id)
-        MATCH SIMPLE,
+        MATCH SIMPLE
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+		NOT VALID,
 	UNIQUE (address, domain),
     CHECK (CHAR_LENGTH(address) > 0 AND CHAR_LENGTH(address) <= 100)
 );

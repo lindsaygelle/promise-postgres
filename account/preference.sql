@@ -7,6 +7,8 @@ account.preference
         REFERENCES account.profile (id)
         MATCH SIMPLE
         ON DELETE CASCADE
+        ON UPDATE NO ACTION
+        NOT VALID
 );
 
 ALTER TABLE account.preference

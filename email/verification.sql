@@ -11,6 +11,8 @@ email.verification
         REFERENCES email.address (id)
         MATCH SIMPLE
         ON DELETE CASCADE
+        ON UPDATE NO ACTION
+        NOT VALID
 );
 
 ALTER TABLE email.verification
