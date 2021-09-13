@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS
 promise.step
 (
+    completed_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
     description VARCHAR(160),
@@ -8,10 +9,10 @@ promise.step
     name CITEXT NOT NULL,
     rank INT8 NOT NULL
         DEFAULT 1,
-    status SERIAL NOT NULL,
-    task SERIAL NOT NULL,
+    status INT NOT NULL,
+    task INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (status)
+    CONSTRAINT FOREIGN KEY (status)
         REFERENCES promise.status (id)
         MATCH SIMPLE
         ON DELETE NO ACTION
@@ -25,6 +26,8 @@ promise.step
         NOT VALID,
     UNIQUE (id, task),
     UNIQUE (name, task),
+    UNIQUE (rank, task),
+    CHECK (completed_at > created_at),
     CHECK (CHAR_LENGTH(name) <= 30),
     CHECK (rank > 0)
 );

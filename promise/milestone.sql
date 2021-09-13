@@ -4,7 +4,7 @@ promise.milestone
     created_at TIMESTAMPTZ NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
     id SERIAL NOT NULL,
-    step SERIAL NOT NULL,
+    step INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (step)
         REFERENCES promise.step (id)

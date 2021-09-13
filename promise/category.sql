@@ -3,6 +3,7 @@ promise.category
 (
     created_at TIMESTAMPTZ NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
+	description VARCHAR(160),
     id SERIAL NOT NULL,
     name CITEXT NOT NULL,
     profile SERIAL NOT NULL,
@@ -12,7 +13,7 @@ promise.category
         MATCH SIMPLE
         ON DELETE CASCADE
         ON UPDATE NO ACTION
-        VALID,
+        NOT VALID,
     UNIQUE (name, profile),
     CHECK (CHAR_LENGTH(name) <= 60)
 );

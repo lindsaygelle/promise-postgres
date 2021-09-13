@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS 
 account.preference
 (
-    profile SERIAL NOT NULL,
+    profile INT NOT NULL,
 	PRIMARY KEY (profile),
 	FOREIGN KEY (profile) 
         REFERENCES account.profile (id)

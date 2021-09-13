@@ -1,13 +1,15 @@
 CREATE TABLE IF NOT EXISTS
 promise.task
 (
-    category SERIAL,
+    category INT
+        DEFAULT NULL,
+    completed_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
     description VARCHAR(160),
     id SERIAL NOT NULL,
     name CITEXT NOT NULL,
-    profile SERIAL NOT NULL,
+    profile INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (category)
         REFERENCES promise.category (id)
@@ -22,7 +24,8 @@ promise.task
         ON UPDATE NO ACTION
         NOT VALID,
     UNIQUE (name, profile),
-    CHECK (CHAR_LENGTH(name) <= 60)
+    CHECK (CHAR_LENGTH(name) <= 60),
+    CHECK (completed_at > created_at)
 );
 
 ALTER TABLE promise.task 
