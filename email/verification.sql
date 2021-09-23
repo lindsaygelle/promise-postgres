@@ -1,18 +1,18 @@
-CREATE TABLE IF NOT EXISTS
-email.verification
+CREATE TABLE IF NOT EXISTS email.verification
 (
-	address SERIAL NOT NULL,
-	code UUID NOT NULL
+    address_id INT NOT NULL,
+    code UUID NOT NULL
         DEFAULT gen_random_uuid(),
-    expires_at TIMESTAMPTZ NOT NULL
+    time_created TIMESTAMP NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (address),
-	FOREIGN KEY (address)
+    time_due TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (address_id),
+    FOREIGN KEY (address_id) 
         REFERENCES email.address (id)
         MATCH SIMPLE
         ON DELETE CASCADE
         ON UPDATE NO ACTION
-        NOT VALID
 );
 
 ALTER TABLE email.verification

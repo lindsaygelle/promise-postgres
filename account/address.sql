@@ -1,16 +1,17 @@
-CREATE TABLE IF NOT EXISTS account.setting
+CREATE TABLE IF NOT EXISTS account.address
 (
+    name CITEXT NOT NULL,
     profile_id INT NOT NULL,
-    time_created TIMESTAMPTZ NOT NULL
+    time_created TIMESTAMPTZ NOT NULL,
         DEFAULT CURRENT_TIMESTAMP,
     time_edited TIMESTAMPTZ NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (profile_id),
+    PRIMARY KEY (name),
     FOREIGN KEY (profile_id)
-        REFERENCES account.profile
+        REFERENCES account.profile (id)
         MATCH SIMPLE
         ON DELETE CASCADE
 );
 
-ALTER TABLE account.setting
+ALTER TABLE account.account
     OWNER TO postgres;

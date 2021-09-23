@@ -1,4 +1,4 @@
 CREATE SCHEMA IF NOT EXISTS account;
 
-ALTER SCHEMA account 
+ALTER SCHEMA account
     OWNER TO postgres;
