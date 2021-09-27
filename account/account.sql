@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS account;
-
+DROP SCHEMA IF EXISTS account CASCADE;
+CREATE SCHEMA account;
 ALTER SCHEMA account
     OWNER TO postgres;

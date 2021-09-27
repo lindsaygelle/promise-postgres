@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS account.information CASCADE;
-CREATE TABLE account.information
+DROP TABLE IF EXISTS account.preference CASCADE;
+CREATE TABLE account.preference
 (
 	profile_id INTEGER NOT NULL,
 	PRIMARY KEY (profile_id),
@@ -10,5 +10,5 @@ CREATE TABLE account.information
 		NOT VALID
 );
 
-ALTER TABLE account.information
+ALTER TABLE account.preference
 	OWNER TO postgres;
