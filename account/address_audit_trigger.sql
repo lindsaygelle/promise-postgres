@@ -1,19 +1,19 @@
 DROP TRIGGER IF EXISTS address_audit_insert
-	ON account.address;
+    ON account.address;
 
 CREATE TRIGGER address_audit_insert
-	AFTER INSERT ON 
-		account.address
-	REFERENCING NEW TABLE AS NEW
+    AFTER INSERT ON 
+        account.address
+    REFERENCING NEW TABLE AS NEW
     FOR EACH STATEMENT EXECUTE FUNCTION 
-		account.address_audit();
-	
+        account.address_audit();
+    
 DROP TRIGGER IF EXISTS address_audit_update
     ON account.address;
 
 CREATE TRIGGER address_audit_update
-	AFTER UPDATE ON 
-		account.address
-	REFERENCING NEW TABLE AS NEW
-	FOR EACH STATEMENT EXECUTE FUNCTION 
-		account.address_audit();
+    AFTER UPDATE ON 
+        account.address
+    REFERENCING NEW TABLE AS NEW
+    FOR EACH STATEMENT EXECUTE FUNCTION 
+        account.address_audit();

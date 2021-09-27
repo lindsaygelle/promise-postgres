@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION
-	account.address_audit()
+    account.address_audit()
 RETURNS TRIGGER
-	AS $trigger$
+    AS $trigger$
 BEGIN
     INSERT INTO account.address_audit (
         name,
@@ -14,6 +14,6 @@ BEGIN
         USER,
         profile_id
     FROM NEW;
-	RETURN NULL;
+    RETURN NULL;
 END;
 $trigger$ LANGUAGE plpgsql;
