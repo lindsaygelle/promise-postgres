@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS email.verification
     time_created TIMESTAMP NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
     time_due TIMESTAMP NOT NULL
-        DEFAULT CURRENT_TIMESTAMP,
+        DEFAULT CURRENT_TIMESTAMP + INTERVAL '1' DAY,
     PRIMARY KEY (address_id),
     FOREIGN KEY (address_id) 
         REFERENCES email.address (id)
