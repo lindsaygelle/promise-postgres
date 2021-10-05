@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS location.country CASCADE;
 CREATE TABLE IF NOT EXISTS location.country
 (
     id SERIAL NOT NULL,

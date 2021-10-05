@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS location.city CASCADE;
 CREATE TABLE IF NOT EXISTS location.city
 (
     country_id INT NOT NULL,
